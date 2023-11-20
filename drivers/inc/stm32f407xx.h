@@ -1,6 +1,6 @@
-#include <cstdint>
 #ifndef INC_STM32F407XX_H_
 #define INC_STM32F407XX_H_
+#include <cstdint>
 
 #define __vo volatile
 /*
@@ -34,9 +34,9 @@ typedef struct
  * Peripheral Definitions (peripheral base addresses typecasted to xxx_RegDef_t)
  * 
 */
-#define SPI1 ((SPI_RegDef_t*)SPI1_BASE)
-#define SPI2 ((SPI_RegDef_t*)SPI2_BASE)
-#define SPI3 ((SPI_RegDef_t*)SPI3_BASE)
+#define SPI1 ((SPI_RegDef_t*)SPI1_BASEADDR)
+#define SPI2 ((SPI_RegDef_t*)SPI2_BASEADDR)
+#define SPI3 ((SPI_RegDef_t*)SPI3_BASEADDR)
 
 /*
  * Clock enable macros for SPIx Peripherals 

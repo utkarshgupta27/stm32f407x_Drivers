@@ -1,7 +1,8 @@
-#include "stm32f407xx.h"
-#include <cstdint>
+
 #ifndef INC_STM32F407XX_SPI_DRIVER_H_
 #define INC_STM32F407XX_SPI_DRIVER_H_
+#include "stm32f407xx.h"
+#include <cstdint>
 /*
 configuration structure for SPIx Peripheral
 */
@@ -35,7 +36,7 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi);
 /*
  * Init and De-init 
 */
-void SPI_Init(SPI_RegDef_t *pSPIHandle);
+void SPI_Init(SPI_Handle_t *pSPIHandle);
 void SPI_DeInit (SPI_RegDef_t *pSPIx);
 /*
  * Data send and recieve
