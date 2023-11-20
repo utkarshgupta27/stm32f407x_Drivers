@@ -29,7 +29,38 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi)
 /*
  * Init and De-init 
 */
-void SPI_Init(SPI_Handle_t *pSPIHandle){}
+void SPI_Init(SPI_Handle_t *pSPIHandle)
+{
+    uint32_t tempreg=0// configure SPI_CR1 Reg
+    //1. config device mode
+    tempreg = tempreg|pSPIHandle->SPIConfig.SPIDevicemode <<2;
+    //2.configure the bus config
+    if(pSPIHandle->SPIConfig.SPI_BusConfig==SPI_BUSCONFIG_FD)
+    {   //bidi mode should be clear
+        tempreg &= ~(1<<15);
+        }
+    else if(pSPIHandle->SPIConfig.SPI_BusConfig==SPI_BUSCONFIG_HD){
+        //bidi mode should be set
+        tempreg |= (1<<15);
+        }
+    else if (pSPIHandle->SPIConfig.SPI_BusConfig==SPI_BUSCONFIG_SIMPLEX_RXONLY)
+    {
+        //bidi mode should be clear, rxonly must be set
+        tempreg &= ~(1<<15);
+        tempreg|=(1<<10);
+        }
+
+    //3.configure the spi serial clock speed (baud rate)
+    tempreg |= pSPIHandle->SPIConfig.SPI_SclkSpeed <<3;
+    //4. configure the DFF
+    tempreg |= pSPIHandle->SPIConfig.SPI_DFF <<11;
+    //5.configure the CPOL
+    tempreg |= pSPIHandle->SPIConfig.SPI_CPOL<<1;
+    //6.configure the CPHA
+    tempreg |=pSPIHandle->SPIConfig.SPI_CPHA <<0;
+
+    pSPIHandle->pSPIx->CR1=tempreg;
+}
 void SPI_DeInit (SPI_RegDef_t *pSPIx){}
 /*
  * Data send and recieve
